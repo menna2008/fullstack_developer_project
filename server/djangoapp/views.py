@@ -71,7 +71,7 @@ def registration(request):
         login(request, user)
         return JsonResponse({"userName" : username, "status" : "Authenticated"})
     else:
-        return JsonResponse({"userName" : userName, "error" : "username already exists"})
+        return JsonResponse({"userName" : username, "error" : "username already exists"})
 
 
 # # Update the `get_dealerships` view to render the index page with
