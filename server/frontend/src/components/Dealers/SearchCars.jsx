@@ -52,7 +52,7 @@ const SearchCars = () => {
 
     const SearchCarsByMake = async () => {
         let make = document.getElementById('make').value;
-        let url = dealer_url + "?make=" + make;
+        let url = cars_url + "?make=" + make;
 
         let res = await fetch(url, {
             method : 'GET',
@@ -68,7 +68,7 @@ const SearchCars = () => {
 
     const SearchCarsByModel = async () => {
         let model = document.getElementById('model').value;
-        let url = dealer_url + "?model=" + model;
+        let url = cars_url + "?model=" + model;
 
         let res = await fetch(url, {
             method : 'GET',
@@ -84,7 +84,7 @@ const SearchCars = () => {
 
     const SearchCarsByYear = async () => {
         let year = document.getElementById('year').value;
-        let url = dealer_url + "?year=" + year;
+        let url = cars_url + "?year=" + year;
 
         let res = await fetch(url, {
             method : 'GET',
@@ -100,7 +100,7 @@ const SearchCars = () => {
 
     const SearchCarsByMileage = async () => {
         let mileage = document.getElementById('mileage').value;
-        let url = dealer_url + "?mileage=" + mileage;
+        let url = cars_url + "?mileage=" + mileage;
 
         let res = await fetch(url, {
             method : 'GET',
@@ -116,7 +116,7 @@ const SearchCars = () => {
 
     const SearchCarsByPrice = async () => {
         let price = document.getElementById('price').value;
-        let url = dealer_url + "?price=" + price;
+        let url = cars_url + "?price=" + price;
 
         let res = await fetch(url, {
             method : 'GET',
@@ -142,7 +142,7 @@ const SearchCars = () => {
             <span>Make</span>
 
             {/* Makes option */}
-            <select name="make" id="make" defaultValue={''} onChange={SearchCarsByMake}>
+            <select name="make" id="make" defaultValue='' onChange={SearchCarsByMake}>
                 <option disabled value=''> -- All -- </option>
                 {makes.map((make, index) => (
                     <option key={index} value={make}>{make}</option>
@@ -150,7 +150,7 @@ const SearchCars = () => {
             </select>
 
             {/* Models option */}
-            <select name="model" id="model" defaultValue={''} onChange={SearchCarsByModel}>
+            <select name="model" id="model" defaultValue='' onChange={SearchCarsByModel}>
                 <option disabled value=''> -- All -- </option>
                 {models.map((model, index) => (
                     <option key={index} value={model}>{model}</option>
@@ -158,8 +158,8 @@ const SearchCars = () => {
             </select>
 
             {/* Years option */}
-            <select name="year" id="year" onChange={SearchCarsByYear}>
-                <option disabled selected> -- All -- </option>
+            <select name="year" id="year" defaultValue='' onChange={SearchCarsByYear}>
+                <option disabled value=''> -- All -- </option>
                 <option value={2024}>2024 or newer</option>
                 <option value={2023}>2023 or newer</option>
                 <option value={2022}>2022 or newer</option>
@@ -168,8 +168,8 @@ const SearchCars = () => {
             </select>
 
             {/* Mileage option */}
-            <select name="mileage" id="mileage" onChange={SearchCarsByMileage}>
-                <option disabled selected> -- All -- </option>
+            <select name="mileage" id="mileage" defaultValue='' onChange={SearchCarsByMileage}>
+                <option disabled value=''> -- All -- </option>
                 <option value={50000}>Less than 50000</option>
                 <option value={100000}>Between 50000 and 100000</option>
                 <option value={150000}>Between 100000 and 150000</option>
@@ -178,8 +178,8 @@ const SearchCars = () => {
             </select>
             
             {/* Price option */}
-            <select name="price" id="price" onChange={SearchCarsByPrice}>
-            <option disabled selected> -- All -- </option>
+            <select name="price" id="price" defaultValue='' onChange={SearchCarsByPrice}>
+            <option disabled value=''> -- All -- </option>
                 <option value={20000}>Less than 20000</option>
                 <option value={40000}>Between 20000 and 40000</option>
                 <option value={60000}>Between 40000 and 60000</option>
@@ -193,8 +193,8 @@ const SearchCars = () => {
                 <p>{message}</p>
             ) : (
                 <div>
-                    {cars.map(car => (
-                        <div>
+                    {cars.map((car, index) => (
+                        <div key={i}>
                             <h3>{car.make} {car.model}</h3>
                             <p>Year: {car.year}</p>
                             <p>Mileage: {car.mileage}</p>

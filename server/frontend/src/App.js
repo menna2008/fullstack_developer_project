@@ -12,9 +12,9 @@ function App() {
       <Route path="/login" element={<LoginPanel />} />
       <Route path="/register" element={<RegisterPanel />} />
       <Route path="/dealers" element={<Dealers />} />
-      <Route path="/dealer/<int:dealer_id>" element={<Dealer />}></Route>
+      <Route path="/dealer/:id" element={<Dealer />}></Route>
       <Route path='/postreview/:id' element={<PostReview />} />
-      <Route path='/searchcars/<int:dealer_id' element={<SearchCars />} />
+      <Route path='/searchcars/:id' element={<SearchCars />} />
     </Routes>
   );
 }
