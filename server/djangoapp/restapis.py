@@ -5,10 +5,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', default="http://localhost:3030")
+    'backend_url',
+    default="http://localhost:3030")
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
     default="http://localhost:5050/")
+searchcars_url = os.getenv(
+    'searchcars_url',
+    default='http://localhost:3050/'
+)
 
 def get_request(endpoint, **kwargs):
     params = ''
@@ -36,7 +41,20 @@ def analyze_review_sentiments(text):
 def post_review(data_dict):
     request_url = backend_url + '/insert_review'
     try:
-        res = request.post(request_url, json=data_dict)
+        res = requests.post(request_url, json=data_dict)
         return res.json()
     except:
         print('Network exception occurred')
+
+def searchcars_request(endpoint, **kwargs):
+    request_url = searchcars_url + endpoint
+    if kwargs:
+        params = ''
+        for key, value in kwargs.items():
+            params += key + '=' + value + '&'
+        request_url +=  '?' + params[ : -1]
+    try :
+        res = requests.get(request_url)
+        return res.json()
+    except:
+        print('Network exception occured')
