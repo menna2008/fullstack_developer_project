@@ -8,23 +8,21 @@ const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);
   // let [state, setState] = useState("")
   let [states, setStates] = useState([])
-  let [searchQuery, setSearchQuery] = useState('')
-  const [originalDealers, setOriginalDealers] = useState([]);
 
-  let root_url = window.location.origin
-  let dealer_url = root_url + "/djangoapp/get_dealers";
+  // let root_url = window.location.origin
+  let dealer_url ="/djangoapp/get_dealers";
   
-  let dealer_url_by_state = root_url + "/djangoapp/get_dealers/";
-
-  const handleInputChange = (e) => {
-    setSearchQuery(e.target.value);
-    const filtered = originalDealers.filter(dealer => dealer.state.toLowerCase().includes(query.toLowerCase()))
-    setDealersList(filtered)
-  }
-
-  const handleLostFocus = () => {
-    if (!searchQuery) {
-        setDealersList(originalDealers)
+  let dealer_url_by_state = "/djangoapp/get_dealers/";
+ 
+  const filterDealers = async (state) => {
+    dealer_url_by_state = dealer_url_by_state+state;
+    const res = await fetch(dealer_url_by_state, {
+      method: "GET"
+    });
+    const retobj = await res.json();
+    if(retobj.status === 200) {
+      let state_dealers = Array.from(retobj.dealers)
+      setDealersList(state_dealers)
     }
   }
 
@@ -41,7 +39,7 @@ const Dealers = () => {
       });
 
       setStates(Array.from(new Set(states)))
-      setOriginalDealers(all_dealers)
+      setDealersList(all_dealers)
     }
   }
   useEffect(() => {
@@ -62,7 +60,13 @@ return(
       <th>Address</th>
       <th>Zip</th>
       <th>
-      <input type="text" placeholder="Search States..." onChange={handleInputChange} onBlur={handleLostFocus} value={searchQuery} />       
+      <select name="state" id="state" onChange={(e) => filterDealers(e.target.value)}>
+      <option value="" selected disabled hidden>State</option>
+      <option value="All">All States</option>
+      {states.map(state => (
+          <option value={state}>{state}</option>
+      ))}
+      </select>        
 
       </th>
       {isLoggedIn ? (
@@ -84,7 +88,7 @@ return(
           }
         </tr>
       ))}
-     </table>
+     </table>;
   </div>
 )
 }
